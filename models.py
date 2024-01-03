@@ -26,3 +26,9 @@ class Cupcake(db.Model):
             'rating': self.rating,
             'image': self.image
         }
+
+def connect_db(app):
+    """Connect to database."""
+
+    db.app = app
+    db.init_app(app)
