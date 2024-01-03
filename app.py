@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from models import db, Cupcake, connect_db
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ connect_db(app)
 
 @app.route('/')
 def home():
-    return 'the api is running!'
+    return render_template('index.html')
 
 @app.route('/api/cupcakes')
 def get_cupcakes():
