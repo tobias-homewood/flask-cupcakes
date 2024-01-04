@@ -6,7 +6,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes'
 app.config['SECRET_KEY'] = "oh-so-secret"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-connect_db(app)
+with app.app_context():
+    connect_db(app)
 
 @app.route('/')
 def home():
