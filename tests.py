@@ -130,3 +130,23 @@ class TestCupcakeViews(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 1)
+
+    def test_delete_cupcake(self):
+        with app.test_client() as client:
+            with app.app_context():
+                cupcake = Cupcake(flavor="TestFlavor", size="TestSize", rating=5, image="http://test.com/cupcake.jpg")
+                db.session.add(cupcake)
+                db.session.commit()
+
+                self.assertEqual(Cupcake.query.count(), 1)
+
+                url = f"/api/cupcakes/{cupcake.id}"
+                resp = client.delete(url)
+
+            self.assertEqual(resp.status_code, 200)
+            data = resp.json
+            self.assertEqual(data, {
+                "message": "deleted"
+            })
+
+            self.assertEqual(Cupcake.query.count(), 0)
